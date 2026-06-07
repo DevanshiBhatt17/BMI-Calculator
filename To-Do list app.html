@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>To-Do List</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial;
+}
+
+body{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#2c2c84,#5a189a);
+}
+
+.container{
+  background:#fff;
+  width:380px;
+  padding:25px;
+  border-radius:15px;
+}
+
+h2{
+  margin-bottom:20px;
+  color:#333;
+}
+
+.input-box{
+  display:flex;
+  background:#eee;
+  border-radius:30px;
+  overflow:hidden;
+}
+
+input{
+  flex:1;
+  border:none;
+  padding:12px;
+  background:transparent;
+  outline:none;
+}
+
+button{
+  background:#ff5a36;
+  color:#fff;
+  border:none;
+  padding:12px 25px;
+  cursor:pointer;
+  border-radius:30px;
+}
+
+ul{
+  list-style:none;
+  margin-top:20px;
+}
+
+li{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin:15px 0;
+}
+
+.task{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
+}
+
+.circle{
+  width:20px;
+  height:20px;
+  border:2px solid #999;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.circle.checked{
+  background:#ff5a36;
+  border:none;
+  color:#fff;
+}
+
+.text.checked{
+  text-decoration:line-through;
+  color:#999;
+}
+
+.delete{
+  cursor:pointer;
+  color:#555;
+  font-size:18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>To-Do List 📝</h2>
+
+  <div class="input-box">
+    <input type="text" id="taskInput" placeholder="Add your task">
+    <button onclick="addTask()">Add</button>
+  </div>
+
+  <ul id="list"></ul>
+</div>
+
+<script>
+function addTask(){
+  let input = document.getElementById("taskInput");
+  let text = input.value.trim();
+
+  if(text === "") return;
+
+  let li = document.createElement("li");
+
+  li.innerHTML = `
+    <div class="task" onclick="toggleTask(this)">
+      <div class="circle"></div>
+      <span class="text">${text}</span>
+    </div>
+    <span class="delete" onclick="deleteTask(this)">×</span>
+  `;
+
+  document.getElementById("list").appendChild(li);
+  input.value="";
+}
+
+function toggleTask(task){
+  let circle = task.querySelector(".circle");
+  let text = task.querySelector(".text");
+
+  circle.classList.toggle("checked");
+  text.classList.toggle("checked");
+
+  circle.innerHTML = circle.classList.contains("checked") ? "✓" : "";
+}
+
+function deleteTask(el){
+  el.parentElement.remove();
+}
+</script>
+
+</body>
+</html>
